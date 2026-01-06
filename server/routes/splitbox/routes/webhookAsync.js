@@ -16,16 +16,20 @@ function webhookAsync(storeMetadata) {
   return async (req, res) => {
     const payload = req.body;
     const headers = req.headers;
-    res.status(200).send("Webhook received");
+
     try {
-      // Verify the signature
+      // Verify the signature FIRST before sending response
       const wh = new Webhook(process.env.WEBHOOK);
       const verifiedPayload = await wh.verify(JSON.stringify(payload), headers);
+
       console.log();
       console.log("*********************************************");
       console.log("              incoming webhook               ");
       console.log("*********************************************");
       console.log("verifiedPayload: ", verifiedPayload);
+
+      // Send success response AFTER verification
+      res.status(200).send("Webhook received");
       if (verifiedPayload) {
         if (payload.payment_request) {
           const preimage = payload.preimage || payload.payment_preimage;
@@ -171,7 +175,15 @@ function webhookAsync(storeMetadata) {
       }
       console.log("Webhook verified");
     } catch (error) {
-      console.error(error.message);
+      console.error("Webhook verification or processing error:", error.message);
+
+      // If response hasn't been sent yet, send error response
+      if (!res.headersSent) {
+        if (error.message && error.message.includes("verify")) {
+          return res.status(401).json({ error: "Invalid webhook signature" });
+        }
+        return res.status(500).json({ error: "Webhook processing failed" });
+      }
       return;
     }
   };
