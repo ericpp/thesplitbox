@@ -14,6 +14,9 @@ function saveSettings(_collection) {
 
     // If albyAccessToken is not blank, encrypt and update it
     if (settings.albyAccessToken && settings.albyAccessToken.trim() !== "") {
+      if (!token || token.trim() === "") {
+        throw new Error("ALBY_ACCESS_TOKEN_ENCRYPT environment variable is required for encrypting tokens");
+      }
       settings.albyAccessToken = encrypt(token, settings.albyAccessToken);
     } else {
       // If albyAccessToken is blank, remove it from the settings to avoid overwriting the database value
