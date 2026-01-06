@@ -4,7 +4,14 @@ function fetchSettings(_collection) {
 
     const account = await collection.findOne({ address });
 
-    // Return an empty array if no results are found
+    // Return default settings if account is not found
+    if (!account) {
+      return {
+        albyAccessToken: false,
+        approvedGuids: [],
+      };
+    }
+
     let settings = {
       albyAccessToken: account.albyAccessToken ? true : false,
       approvedGuids:

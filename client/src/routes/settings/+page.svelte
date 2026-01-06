@@ -20,11 +20,28 @@
       const res = await fetch(`${remoteServer}/fetch-settings`, {
         credentials: "include",
       });
+
+      if (!res.ok) {
+        console.error("Failed to fetch settings:", res.status);
+        return;
+      }
+
       const data = await res.json();
       console.log(data);
-      tokenSaved = data.albyAccessToken;
-      approvedGuids = data.approvedGuids;
-    } catch (err) {}
+
+      // Handle null or undefined data
+      if (data) {
+        tokenSaved = data.albyAccessToken || false;
+        approvedGuids = data.approvedGuids && data.approvedGuids.length > 0
+          ? data.approvedGuids
+          : [""];
+      } else {
+        tokenSaved = false;
+        approvedGuids = [""];
+      }
+    } catch (err) {
+      console.error("Error fetching settings:", err);
+    }
   }
 
   async function saveSettings() {

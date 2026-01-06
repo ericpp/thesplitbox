@@ -50,9 +50,17 @@ const storeMetadata = {
   fetchSettings: async (address) => {
     const user = inMemoryUserStore.find((v) => v.address === address);
     if (user) {
-      return user; // Return the user object with all properties, including settings
+      // Return settings in the expected format
+      return {
+        albyAccessToken: user.albyAccessToken ? true : false,
+        approvedGuids: user.approvedGuids?.length > 0 ? user.approvedGuids : [],
+      };
     }
-    return null; // Return null if the user is not found
+    // Return default settings if user is not found
+    return {
+      albyAccessToken: false,
+      approvedGuids: [],
+    };
   },
 };
 
