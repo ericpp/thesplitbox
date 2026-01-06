@@ -20,20 +20,15 @@ async function webhook() {
     const wh = new Webhook(process.env.PRISM_WEBHOOK);
 
     try {
-      try {
-        // Verify the signature
-        const verifiedPayload = await wh.verify(
-          JSON.stringify(payload),
-          headers
-        );
-        console.log("Webhook verified");
+      // Verify the signature FIRST
+      const verifiedPayload = await wh.verify(
+        JSON.stringify(payload),
+        headers
+      );
+      console.log("Webhook verified");
 
-        // Process the webhook payload here
-        res.status(200).send("Webhook received");
-      } catch (err) {
-        console.error(err);
-        res.status(200).send("Invalid signature");
-      }
+      // Process the webhook payload here
+      res.status(200).send("Webhook received");
 
       let newData = req.body;
       let feedUrl = null;
@@ -108,7 +103,15 @@ async function webhook() {
         }
       }
     } catch (err) {
-      console.error(err);
+      console.error("Webhook error:", err.message);
+
+      // If response hasn't been sent yet, send appropriate error response
+      if (!res.headersSent) {
+        if (err.message && err.message.includes("verify")) {
+          return res.status(401).json({ error: "Invalid webhook signature" });
+        }
+        return res.status(500).json({ error: "Webhook processing failed" });
+      }
     }
   };
 }
