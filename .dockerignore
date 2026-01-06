@@ -1,0 +1,7 @@
+_db
+**/.env
+**/node_modules
+.git
+*.md
+client/.svelte-kit
+public
