@@ -3,6 +3,12 @@ import { decode } from "bolt11";
 
 export default function confirmInvoice(preimage, invoice) {
   try {
+    // Validate inputs
+    if (!preimage || !invoice) {
+      console.error("Preimage and invoice are required for confirmation");
+      return false;
+    }
+
     // Ensure preimage is a Buffer (or handle string conversion)
     const preimageBuffer = Buffer.isBuffer(preimage)
       ? preimage
@@ -17,7 +23,7 @@ export default function confirmInvoice(preimage, invoice) {
     );
     if (!paymentHashTag) {
       console.error("Payment hash is missing from decoded invoice.");
-      return;
+      return false;
     }
 
     const paymentHashFromInvoice = Buffer.from(paymentHashTag.data, "hex");
@@ -32,7 +38,12 @@ export default function confirmInvoice(preimage, invoice) {
     if (paymentHashFromInvoice.equals(paymentHashFromPreimage)) {
       return true;
     }
+
+    // Hashes don't match
+    console.error("Payment hash verification failed: preimage doesn't match invoice");
+    return false;
   } catch (error) {
-    console.error("Error decoding the invoice:", error.message);
+    console.error("Error confirming invoice:", error.message);
+    return false;
   }
 }
