@@ -31,10 +31,10 @@ function webhookSync(storeMetadata) {
           );
           res.json({ completedPayments, id });
         } else {
-          res.json({ succes: false, reason: "unconfirmed preimage" });
+          res.json({ success: false, reason: "unconfirmed preimage" });
         }
       } else {
-        res.json({ succes: false, reason: "no payment request present" });
+        res.json({ success: false, reason: "no payment request present" });
       }
     } catch (error) {
       console.error(error.message);
