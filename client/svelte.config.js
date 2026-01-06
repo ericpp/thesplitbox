@@ -6,8 +6,8 @@ const config = {
     adapter: adapter({
       // default options are shown. On some platforms
       // these options are set automatically — see below
-      pages: "../server/public",
-      assets: "../server/public",
+      pages: "../public",
+      assets: "../public",
       fallback: undefined,
       precompress: false,
       strict: true,

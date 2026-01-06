@@ -6,7 +6,9 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "concurrently \"npm run dev --prefix client\" \"cross-env NODE_ENV=development nodemon --ignore '*.json' server/index.js\""
+    "dev": "concurrently \"npm run dev --prefix client\" \"cross-env NODE_ENV=development nodemon --ignore '*.json' server/index.js\"",
+    "build": "cd client && npm run build",
+    "start": "cross-env NODE_ENV=production node server/index.js"
   },
   "author": "",
   "license": "ISC",
@@ -14,6 +16,7 @@
     "@nostr-dev-kit/ndk": "^2.14.9",
     "bcrypt": "^5.1.1",
     "bech32": "^2.0.0",
+    "concurrently": "^9.2.1",
     "cross-env": "^7.0.3",
     "dotenv": "^16.4.7",
     "mongodb": "^6.12.0",
