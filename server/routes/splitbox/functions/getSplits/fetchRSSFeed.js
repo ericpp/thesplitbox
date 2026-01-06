@@ -1,4 +1,4 @@
-import { parse } from "fast-xml-parser";
+import { XMLParser } from "fast-xml-parser";
 const parserOptions = {
   attributeNamePrefix: "@_",
   ignoreAttributes: false,
@@ -8,7 +8,8 @@ const parserOptions = {
 export default async function fetchFeed(feedUrl) {
   let res = await fetch(feedUrl);
   let data = await res.text();
-  let xml2Json = parse(data, parserOptions);
+  const parser = new XMLParser(parserOptions);
+  let xml2Json = parser.parse(data);
   let feed = xml2Json.rss.channel;
 
   return feed;
