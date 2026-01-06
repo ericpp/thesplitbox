@@ -45,7 +45,7 @@
         <path d="m21 21-4.35-4.35"/>
       </svg>
     </div>
-    <h2>GUID Lookup</h2>
+    <h2>Transaction Lookup</h2>
     <p>Search and view payment metadata by transaction GUID</p>
   </a>
 

@@ -38,7 +38,7 @@
       </svg>
       Back
     </a>
-    <h1>GUID Lookup</h1>
+    <h1>Transaction Lookup</h1>
     <p class="page-description">Search for payment metadata by transaction GUID</p>
   </div>
 
