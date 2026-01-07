@@ -40,7 +40,7 @@ if (process.env.NODE_ENV === "development") {
   app.use(express.static(path.join(process.cwd(), "/public")));
 }
 
-app.use(express.json()); // Parse JSON request bodies
+app.use(express.json({ limit: '1mb' })); // Parse JSON request bodies with size limit
 
 app.use(
   helmet({
