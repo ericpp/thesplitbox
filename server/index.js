@@ -10,10 +10,10 @@ import splitBoxRouter from "./routes/splitbox/router.js";
 import wellknownRoutes from "./routes/wellknown/wellknownRoutes.js";
 import prismRoutes from "./routes/prism/router.js";
 
-const PORT = 3000; // Server port
-const app = express();
-
 dotenv.config();
+
+const PORT = process.env.PORT || 3000;
+const app = express();
 
 app.use(cookieParser());
 
