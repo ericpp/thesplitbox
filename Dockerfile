@@ -5,6 +5,10 @@ WORKDIR /app
 # Copy source code
 COPY . .
 
+ARG VITE_ALBY_ID
+ARG VITE_REDIRECT_URL
+ARG VITE_SERVER_URL
+
 # Install dependencies
 RUN npm install
 RUN cd client && npm install

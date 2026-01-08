@@ -5,6 +5,10 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - VITE_ALBY_ID=141XgUSS5P
+        - VITE_REDIRECT_URL=https://splitbox.ericpp.dev
+        - VITE_SERVER_URL=https://splitbox.ericpp.dev
     restart: unless-stopped
     ports:
       - "3000:3000"
