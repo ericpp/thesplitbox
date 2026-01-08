@@ -55,7 +55,7 @@ async function createEpisode({
           content: createProfile({
             name: `${feedTitle} ${itemTitle}`,
             picture: imgSrc,
-            lud16: `${event.id}@thesplitbox.com`,
+            lud16: `${event.id}@${process.env.DOMAIN}`,
           }),
           created_at: Math.floor(Date.now() / 1000),
           kind: 0,
