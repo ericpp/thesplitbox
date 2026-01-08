@@ -4,13 +4,14 @@ const router = express.Router();
 
 router.get("/lnurlp/:name", (req, res) => {
   const { name } = req.params; // Extract the dynamic part from the route
+  const domain = process.env.WEBHOOK_SERVER.match(/^https?:\/\/([^\/]+)/)?.[1] || '';
 
   res.json({
     status: "OK",
     tag: "payRequest",
     commentAllowed: 255,
-    callback: `https://${process.env.DOMAIN}/lnurlp/${name}/callback`, // Use the dynamic name
-    metadata: `[["text/identifier","${name}@${process.env.DOMAIN}"],["text/plain","${name}"]]`,
+    callback: `${process.env.WEBHOOK_SERVER}/lnurlp/${name}/callback`, // Use the dynamic name
+    metadata: `[["text/identifier","${name}@${domain}"],["text/plain","${name}"]]`,
     minSendable: 1000,
     maxSendable: 10000000000,
     payerData: {
