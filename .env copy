@@ -21,3 +21,5 @@ WEBHOOK_SERVER = your server route
 
 NSEC = your nostr nsec
 NPUB = your nostr npub
+
+ALBY_WALLET = your alby wallet username

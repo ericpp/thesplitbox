@@ -109,7 +109,7 @@ async function handleTskCallback({
     const metaID = randomUUID();
     const payload = await getBlock(eventGuid, blockGuid);
     const albyResponse = await axios.get(
-      `https://getalby.com/lnurlp/thesplitbox/callback`,
+      `https://getalby.com/lnurlp/${process.env.ALBY_WALLET}/callback`,
       {
         params: {
           amount,

@@ -17,6 +17,8 @@ function webhookAsync(storeMetadata) {
     const payload = req.body;
     const headers = req.headers;
 
+    const splitboxAddress = `${process.env.ALBY_WALLET}@getalby.com`;
+
     try {
       // Verify the signature FIRST before sending response
       const wh = new Webhook(process.env.WEBHOOK);
@@ -99,7 +101,7 @@ function webhookAsync(storeMetadata) {
               let block = getBlock(event, blockGuid);
 
               let account = await storeMetadata.fetchAccessToken(
-                parentAddress || "thesplitbox@getalby.com"
+                parentAddress || splitboxAddress
               );
 
               //this adds an '@_' to each destination so it matches parsed RSS feeds
@@ -156,7 +158,7 @@ function webhookAsync(storeMetadata) {
             } else if (metadata) {
               let splits = await getSplits(metadata);
               let account = await storeMetadata.fetchAccessToken(
-                parentAddress || "thesplitbox@getalby.com"
+                parentAddress || splitboxAddress
               );
               let completedPayments = await processPayments({
                 accessToken: account.albyAccessToken,
