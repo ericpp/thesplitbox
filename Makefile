@@ -1,4 +1,4 @@
-VITE_ALBY_ID := 5LOmaKH48R
+VITE_ALBY_ID := 5CetJoPgnR
 VITE_REDIRECT_URL := https://boostbeach.xyz
 VITE_SERVER_URL := https://boostbeach.xyz
 
