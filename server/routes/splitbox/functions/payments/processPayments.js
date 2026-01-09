@@ -1,5 +1,5 @@
 import sendKeysend from "./sendKeysend.js";
-import sendLNUrl from "./sendLNUrl.js";
+import sendLNAddress from "./sendLNAddress.js";
 
 export default async function processPayments({
   accessToken,
@@ -14,7 +14,7 @@ export default async function processPayments({
     if (recipient?.["@_type"] === "node") {
       return sendKeysend({ accessToken, recipient, metadata, id });
     } else if (recipient?.["@_type"] === "lnaddress") {
-      return sendLNUrl({ accessToken, recipient, id });
+      return sendLNAddress({ accessToken, recipient, metadata, id });
     } else {
       return Promise.resolve({ status: "skipped", recipient });
     }
