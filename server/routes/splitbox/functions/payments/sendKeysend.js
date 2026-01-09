@@ -61,7 +61,7 @@ export default async function sendKeysend({
       const isServerError = statusCode >= 500;
       const isClientError = statusCode >= 400 && statusCode < 500;
 
-      console.error(`Keysend Payment Error: ${statusCode}`);
+      console.error(`Keysend Payment Error ${statusCode}: ${error.response?.message}`);
       console.error(
         `Problem appears on: ${
           isServerError ? "Alby's end" : isClientError ? "Your end" : "Unknown"

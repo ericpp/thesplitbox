@@ -177,7 +177,10 @@ function webhookAsync(storeMetadata) {
       }
       console.log("Webhook verified");
     } catch (error) {
-      console.error("Webhook verification or processing error:", error.message);
+      const preimage = payload?.preimage || payload?.payment_preimage;
+      const invoice = payload?.payment_request;
+
+      console.error("Webhook verification or processing error: ", invoice, preimage, error.message);
 
       // If response hasn't been sent yet, send error response
       if (!res.headersSent) {

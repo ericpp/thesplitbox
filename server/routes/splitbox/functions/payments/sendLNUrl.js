@@ -15,7 +15,7 @@ export default function sendLNUrl({ accessToken, recipient, id }) {
       const data = await res.json();
 
       if (!data.callback) {
-        throw new Error("Callback URL missing in LNURLP response");
+        throw new Error("Callback URL missing in LNURLP response for recipient: " + recipient["@_address"]);
       }
       console.log(
         `${data.callback}?amount=${
