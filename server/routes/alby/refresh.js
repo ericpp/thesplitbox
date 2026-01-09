@@ -74,6 +74,17 @@ const refresh = async (req, res) => {
       }),
     ]);
 
+    // Check if the logged-in wallet matches the ALBY_WALLET environment variable
+    const allowedWallet = `${process.env.ALBY_WALLET}@getalby.com`;
+    const userWallet = account.data.lightning_address;
+
+    if (userWallet !== allowedWallet) {
+      console.error(`Unauthorized wallet refresh attempt: ${userWallet} (expected: ${allowedWallet})`);
+      return res.status(403).json({
+        message: "Unauthorized wallet. Only the configured wallet can access this application."
+      });
+    }
+
     const user = { ...account.data, ...balance.data };
 
     res.cookie("awt", newToken, {

@@ -84,6 +84,17 @@ const auth = async (req, res, next) => {
       return res.status(400).json({ message: "Failed to fetch user data" });
     }
 
+    // Check if the logged-in wallet matches the ALBY_WALLET environment variable
+    const allowedWallet = `${process.env.ALBY_WALLET}@getalby.com`;
+    const userWallet = account.data.lightning_address;
+
+    if (userWallet !== allowedWallet) {
+      console.error(`Unauthorized wallet login attempt: ${userWallet} (expected: ${allowedWallet})`);
+      return res.status(403).json({
+        message: "Unauthorized wallet. Only the configured wallet can access this application."
+      });
+    }
+
     const tempCode = crypto.randomBytes(16).toString("hex");
     const user = { ...account.data, ...balance.data, tempCode };
 
